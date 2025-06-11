@@ -18,7 +18,7 @@ from utils import (
 
 # Create a FastAPI instance
 api = FastAPI(
-    title="DataScientest MAY25 BMLOPS // FastAPI exam: Peter Stieg",
+    title="MAY25 BMLOPS // FastAPI",
     description="FastAPI app returning random questions via endpoints or Streamlit app.",
     version="0.0.1",
 )
@@ -55,7 +55,7 @@ async def get_index(request: Request) -> HTMLResponse:
         "index.html",
         {
             "request": request,
-            "title": "DataScientest MAY25 BMLOPS // FastAPI exam",
+            "title": "MAY25 BMLOPS // FastAPI",
             "streamlit_online": streamlit_online,
             "buttons": buttons,
         },

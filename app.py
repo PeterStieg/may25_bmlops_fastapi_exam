@@ -12,7 +12,7 @@ from utils import (
 )
 
 st.set_page_config(
-    page_title="DataScientest // FastAPI exam",
+    page_title="MAY25 BMLOPS // FastAPI",
     page_icon="static/favicon.png",
     layout="wide",
 )
