@@ -18,7 +18,7 @@ st.set_page_config(
 )
 
 # Title
-st.title(f"DataScientest // FastAPI exam")
+st.title(f"MAY25 BMLOPS // FastAPI")
 
 questions_df = get_DataFrame_from_Excel()
 questions_count_db = questions_df.shape[0]
