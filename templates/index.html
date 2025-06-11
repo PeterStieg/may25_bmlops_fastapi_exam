@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .status-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status-online {
+            background: #10b981;
+            color: white;
+        }
+        .status-offline {
+            background: #ef4444;
+            color: white;
+        }
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(var(--button-count, 3), 1fr);
+            gap: 16px;
+            margin-top: 30px;
+        }
+        .btn-link {
+            display: block;
+            background: #667eea;
+            color: white;
+            padding: 16px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+        .btn-link:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .note {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+            text-align: center;
+        }
+        .code-container {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #495057;
+            position: relative;
+        }
+        .code-text {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .copy-btn {
+            background: #667eea;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 8px;
+            cursor: pointer;
+            color: white;
+            transition: background 0.2s ease;
+            font-size: 12px;
+        }
+        .copy-btn:hover {
+            background: #5a67d8;
+        }
+        .copy-feedback {
+            position: absolute;
+            right: 10px;
+            top: -25px;
+            background: #28a745;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .copy-feedback.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>{{ title }}</h1>
+        <p>Use the endpoints' documentation or {% if streamlit_online == False %}launch {% else %}use {% endif %} the Streamlit app to get random questions.</p>
+        
+        {% if streamlit_online == False %}<div class="code-container">
+            <span class="code-text">python3 -m streamlit run app.py</span>
+            <button class="copy-btn" onclick="copyToClipboard(this)" title="Copy to clipboard">
+                📋
+            </button>
+            <div class="copy-feedback">Copied!</div>
+        </div>{% endif %}
+
+        <div class="button-grid" style="--button-count: {{ buttons|length }};">
+            {% for button in buttons %}
+                <a href="{{ button.url }}" title="{{ button.description }}"
+                   class="btn-link"
+                   target="_blank">
+                    <div>{{ button.text }}</div>
+                </a>
+            {% endfor %}
+        </div>
+        <p class="note">
+            <strong>© 2025</strong> // Peter Stieg
+        </p>
+    </div>
+
+    <script>
+        function copyToClipboard(button) {
+            const codeText = button.parentElement.querySelector('.code-text').textContent;
+            const feedback = button.parentElement.querySelector('.copy-feedback');
+            
+            navigator.clipboard.writeText(codeText).then(function() {
+                feedback.classList.add('show');
+                setTimeout(() => {
+                    feedback.classList.remove('show');
+                }, 1500);
+            }).catch(function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
