@@ -59,7 +59,8 @@ async def check_streamlit_status(streamlit_url: str = "http://localhost:8501") -
 
 # Function to get button configurations based on service availability
 def get_button_config(
-    is_streamlit_online: bool, base_url: str = "http://localhost:8000"
+    is_streamlit_online: bool,
+    base_url: str = "https://may-25-bmlops-fastapi.streamlit.app/",
 ) -> List[Dict[str, str]]:
     """
     Returns a list of button configurations based on service availability.
@@ -88,7 +89,7 @@ def get_button_config(
     # Add Streamlit button if service is accessible
     if is_streamlit_online:
         streamlit_button = {
-            "url": "http://localhost:8501",
+            "url": "https://may-25-bmlops-fastapi.streamlit.app/",
             "text": "Streamlit",
             "description": "Interactive Streamlit application for FastAPI exam",
         }
