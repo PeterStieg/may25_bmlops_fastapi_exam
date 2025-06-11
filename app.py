@@ -33,13 +33,15 @@ if "correct_box_options" not in st.session_state:
 
 # Fetching test types and categories from the FastAPI server
 try:
-    categories = requests.get("http://127.0.0.1:8000/categories").json()
+    categories = requests.get("https://fastapi-j6h5.onrender.com/categories").json()
     categories_ui = ["All"] + categories
 
-    test_types = requests.get("http://127.0.0.1:8000/test_types").json()
+    test_types = requests.get("https://fastapi-j6h5.onrender.com/test_types").json()
     test_types_ui = ["All"] + test_types
 
-    registered_users = requests.get("http://127.0.0.1:8000/registered_users").json()
+    registered_users = requests.get(
+        "https://fastapi-j6h5.onrender.com/registered_users"
+    ).json()
 
 except requests.exceptions.RequestException:
     st.error(f"The FastAPI server is not running or not reachable.", icon="🚨")
@@ -84,7 +86,7 @@ if api_error == False:
 
     # Send request with headers
     response = requests.get(
-        "http://127.0.0.1:8000/check_user_login", headers=auth_headers
+        "https://fastapi-j6h5.onrender.com/check_user_login", headers=auth_headers
     )
 
     login_type = response.json()
@@ -142,7 +144,7 @@ if api_error == False:
         test_categories_str = ",".join(subject_box)
         question_count_str = number_radio
 
-        query_string = f"http://127.0.0.1:8000/questions?use={test_type_str}{'&subject=' + f'{test_categories_str}' if subject_box != [] else ''}&question_count={question_count_str}"
+        query_string = f"https://fastapi-j6h5.onrender.com/questions?use={test_type_str}{'&subject=' + f'{test_categories_str}' if subject_box != [] else ''}&question_count={question_count_str}"
 
         # Get the DataFrame from the API
         questions_json = requests.get(query_string)
@@ -340,7 +342,7 @@ if api_error == False:
 
                         # Send request with headers instead of parameters
                         response = requests.post(
-                            "http://127.0.0.1:8000/add_question",
+                            "https://fastapi-j6h5.onrender.com/add_question",
                             headers=auth_headers,
                             json=new_question_dict,
                         )
